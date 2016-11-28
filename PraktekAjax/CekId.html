@@ -1,0 +1,51 @@
+<html>
+<head>
+<script>
+var drz, kata, x;
+function cekid(){
+    kata = document.getElementById("userid").value;
+    if(kata.length>2){
+        document.getElementById("teks").innerHTML = "checking...";
+        drz = buatajax();
+        var url="cekid.php";
+        url=url+"?q="+kata;
+        url=url+"&sid="+Math.random();
+        drz.onreadystatechange=stateChanged;
+        drz.open("GET",url,true);
+        drz.send(null);
+    }else{
+        fokus();
+}
+}
+
+function buatajax(){
+    if (window.XMLHttpRequest){
+        return new XMLHttpRequest();
+    }
+    if (window.ActiveXObject){
+        return new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    return null;
+}
+
+function stateChanged(){
+var data;
+    if (drz.readyState==4){
+        data=drz.responseText;
+        document.getElementById("teks").innerHTML = data;
+    }
+}
+
+function fokus(){
+    document.getElementById("userid").focus();
+}
+</script>
+</head>
+<body style="font-family:verdana;font-size:9pt">
+<form>
+User ID : <input type=text name=userid id=userid onblur=cekid()>
+<span id=teks style="color:red;font-size:8pt"></span> <br>
+Email : <input type=text name=email>
+</form>
+</body>
+</html>
